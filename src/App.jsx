@@ -254,7 +254,11 @@ export default function App() {
         .floating-cta { animation: float 3s ease-in-out infinite; }
         input::placeholder, textarea::placeholder, select { color: #6b7280; }
         option { background: #0f1a12; }
+        .desktop-nav { display: flex; }
+        .mobile-menu-btn { display: none !important; }
         @media (max-width:768px) {
+          .desktop-nav { display: none !important; }
+          .mobile-menu-btn { display: flex !important; }
           .hero-grid { flex-direction: column !important; text-align: center; }
           .hero-tree { display: none !important; }
           .services-grid { grid-template-columns: 1fr !important; }
@@ -293,14 +297,14 @@ export default function App() {
           </div>
 
           {/* Nav desktop */}
-          <nav style={{ display: "flex", gap: 28, alignItems: "center" }} className="desktop-nav">
+          <nav className="desktop-nav" style={{ gap: 28, alignItems: "center" }}>
             {[["Services","services"],["Why Us","whyus"],["Gallery","gallery"],["Reviews","reviews"],["Contact","contact"]].map(([label,id]) => (
               <a key={id} href={`#${id}`} className="nav-link" onClick={e => { e.preventDefault(); scrollTo(id); }}>{label}</a>
             ))}
           </nav>
 
-          {/* Header CTA */}
-          <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
+          {/* Header CTA desktop */}
+          <div className="desktop-nav" style={{ gap: 10, alignItems: "center" }}>
             <a href="tel:4404524840" style={{ ...btnOutline, padding: "9px 16px", fontSize: 14, textDecoration: "none" }} className="btn-hover">
               📞 (440) 452-4840
             </a>
@@ -308,7 +312,29 @@ export default function App() {
               Free Estimate
             </button>
           </div>
+
+          {/* Hamburger mobile */}
+          <button onClick={() => setMenuOpen(!menuOpen)} className="mobile-menu-btn" style={{ background: "none", border: "1px solid rgba(74,222,128,0.4)", borderRadius: 8, padding: "8px 10px", cursor: "pointer", flexDirection: "column", gap: 5 }}>
+            <span style={{ display: "block", width: 22, height: 2, background: "#4ade80", borderRadius: 2, transition: "all 0.3s", transform: menuOpen ? "rotate(45deg) translate(5px,5px)" : "none" }} />
+            <span style={{ display: "block", width: 22, height: 2, background: "#4ade80", borderRadius: 2, opacity: menuOpen ? 0 : 1, transition: "all 0.3s" }} />
+            <span style={{ display: "block", width: 22, height: 2, background: "#4ade80", borderRadius: 2, transition: "all 0.3s", transform: menuOpen ? "rotate(-45deg) translate(5px,-5px)" : "none" }} />
+          </button>
         </div>
+
+        {/* Mobile dropdown */}
+        {menuOpen && (
+          <div style={{ background: "rgba(5,13,7,0.98)", backdropFilter: "blur(20px)", borderTop: "1px solid rgba(74,222,128,0.15)", padding: "20px 24px", display: "flex", flexDirection: "column", gap: 4 }}>
+            {[["Services","services"],["Why Us","whyus"],["Gallery","gallery"],["Reviews","reviews"],["Contact","contact"]].map(([label,id]) => (
+              <a key={id} href={"#" + id} onClick={e => { e.preventDefault(); scrollTo(id); }} style={{ color: "#e5e7eb", textDecoration: "none", fontSize: 17, fontWeight: 600, padding: "12px 0", borderBottom: "1px solid rgba(255,255,255,0.05)", display: "block" }}>
+                {label}
+              </a>
+            ))}
+            <div style={{ display: "flex", flexDirection: "column", gap: 10, marginTop: 16 }}>
+              <a href="tel:4404524840" style={{ ...btnOutline, textAlign: "center", textDecoration: "none", padding: "13px", display: "block" }}>📞 (440) 452-4840</a>
+              <button onClick={() => { setShowModal(true); setMenuOpen(false); }} style={{ ...btnGreen, marginTop: 0, textAlign: "center", width: "100%" }}>Get Free Estimate</button>
+            </div>
+          </div>
+        )}
       </header>
 
       {/* ── HERO ── */}
@@ -687,7 +713,7 @@ export default function App() {
 
       {/* ── FLOATING CALL BUTTON ── */}
       <a href="tel:4404524840" className="floating-cta" style={{
-        position: "fixed", bottom: 28, right: 20, zIndex: 800,
+        position: "fixed", bottom: 24, right: 16, zIndex: 800, maxWidth: "calc(100vw - 32px)",
         background: "linear-gradient(135deg,#16a34a,#4ade80)",
         color: "#052e16", fontWeight: 800, fontSize: 14,
         textDecoration: "none", borderRadius: 50,

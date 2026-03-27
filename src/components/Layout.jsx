@@ -48,18 +48,24 @@ export function QuoteModal({ onClose }) {
 function ServicesDropdown({ pathname }) {
   const [open, setOpen] = useState(false);
   const ref = useRef();
+  const timer = useRef();
+
+  const onEnter = () => { clearTimeout(timer.current); setOpen(true); };
+  const onLeave = () => { timer.current = setTimeout(() => setOpen(false), 200); };
+
   useEffect(() => {
     const h = (e) => { if (ref.current && !ref.current.contains(e.target)) setOpen(false); };
     document.addEventListener("mousedown", h);
-    return () => document.removeEventListener("mousedown", h);
+    return () => { document.removeEventListener("mousedown", h); clearTimeout(timer.current); };
   }, []);
+
   return (
-    <div ref={ref} style={{ position:"relative" }} onMouseEnter={()=>setOpen(true)} onMouseLeave={()=>setOpen(false)}>
+    <div ref={ref} style={{ position:"relative" }} onMouseEnter={onEnter} onMouseLeave={onLeave}>
       <span className={`nav-link${pathname.startsWith("/services")?" active":""}`} style={{ cursor:"pointer", display:"flex", alignItems:"center", gap:4 }} onClick={()=>setOpen(!open)}>
-        Services <span style={{ fontSize:10, transition:"transform 0.2s", display:"inline-block", transform:open?"rotate(180deg)":"none" }}>v</span>
+        Services <span style={{ fontSize:10, display:"inline-block", transform:open?"rotate(180deg)":"none", transition:"transform 0.2s" }}>v</span>
       </span>
       {open && (
-        <div style={{ position:"absolute", top:"calc(100% + 8px)", left:"50%", transform:"translateX(-50%)", background:"rgba(5,13,7,0.99)", border:"1px solid rgba(74,222,128,0.25)", borderRadius:16, padding:10, minWidth:220, backdropFilter:"blur(20px)", boxShadow:"0 20px 60px rgba(0,0,0,0.8)", zIndex:9999 }}>
+        <div onMouseEnter={onEnter} onMouseLeave={onLeave} style={{ position:"absolute", top:"calc(100% + 2px)", left:"50%", transform:"translateX(-50%)", background:"rgba(5,13,7,0.99)", border:"1px solid rgba(74,222,128,0.25)", borderRadius:16, padding:10, minWidth:220, backdropFilter:"blur(20px)", boxShadow:"0 20px 60px rgba(0,0,0,0.8)", zIndex:9999 }}>
           {SERVICES_NAV.map(([label,path]) => (
             <Link key={path} to={path} onClick={()=>setOpen(false)} style={{ display:"block", padding:"11px 14px", color:"#9ca3af", textDecoration:"none", fontSize:14, fontWeight:500, borderRadius:10, transition:"all 0.2s" }}
               onMouseEnter={e=>{e.currentTarget.style.color="#4ade80";e.currentTarget.style.background="rgba(74,222,128,0.08)";}}
@@ -95,7 +101,7 @@ export default function Layout({ children }) {
         .nav-link:hover,.nav-link.active{color:#4ade80;}
         .card-hover{transition:all 0.3s ease;} .card-hover:hover{transform:translateY(-6px);border-color:rgba(74,222,128,0.4)!important;}
         .floating-cta{animation:floatAnim 3s ease-in-out infinite;}
-        .footer-link{color:#86efac!important;text-decoration:none!important;font-size:14px;display:block;margin-bottom:10px;transition:color 0.2s;cursor:pointer;}
+        .footer-link{color:#9ca3af!important;text-decoration:none!important;font-size:14px;display:block;margin-bottom:10px;transition:color 0.2s;cursor:pointer;}
         .footer-link:hover{color:#4ade80!important;}
         input::placeholder,textarea::placeholder{color:#6b7280;} option{background:#0f1a12;}
         @keyframes floatAnim{0%,100%{transform:translateY(0);}50%{transform:translateY(-12px);}}
@@ -108,6 +114,10 @@ export default function Layout({ children }) {
           .footer-grid{grid-template-columns:1fr 1fr!important;gap:28px!important;}
           .two-col{grid-template-columns:1fr!important;}
           .three-col{grid-template-columns:1fr 1fr!important;}
+          section{padding-left:16px!important;padding-right:16px!important;}
+          h1,h2,h3{word-break:break-word;}
+          img,svg{max-width:100%!important;}
+          .glass{padding:20px 16px!important;}
         }
         @media(max-width:480px){
           .footer-grid{grid-template-columns:1fr!important;}

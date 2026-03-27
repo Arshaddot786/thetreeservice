@@ -33,7 +33,7 @@ export default function About() {
 
       {/* Jason's Story */}
       <section style={{ padding: "80px 24px", position: "relative", zIndex: 1 }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 64, alignItems: "center" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 40, alignItems: "start" }}>
           <div>
             <div style={{ fontSize: 13, color: "#4ade80", fontWeight: 700, letterSpacing: 3, textTransform: "uppercase", marginBottom: 16 }}>Owner & Founder</div>
             <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(2rem,3.5vw,2.8rem)", color: "#fff", marginBottom: 24, lineHeight: 1.2 }}>Jason Built This Business on Trust</h2>
@@ -78,7 +78,7 @@ export default function About() {
             <div style={{ fontSize: 13, color: "#4ade80", fontWeight: 700, letterSpacing: 3, textTransform: "uppercase", marginBottom: 14 }}>What We Stand For</div>
             <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(2rem,3.5vw,2.8rem)", color: "#fff" }}>Our Core Values</h2>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: 24 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 24 }}>
             {TEAM_VALUES.map((v) => (
               <div key={v.title} className="glass card-hover" style={{ borderRadius: 20, padding: "32px 28px", border: "1px solid rgba(255,255,255,0.06)" }}>
                 <div style={{ fontSize: 36, marginBottom: 16 }}>{v.icon}</div>
@@ -98,7 +98,7 @@ export default function About() {
             <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(2rem,3.5vw,2.8rem)", color: "#fff", marginBottom: 16 }}>State-of-the-Art Equipment</h2>
             <p style={{ color: "#6b7280", maxWidth: 520, margin: "0 auto", lineHeight: 1.7 }}>We invest in the best tools so we can tackle jobs that other companies can't — safely and efficiently.</p>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 20 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 20 }}>
             {[
               { icon: "🏗️", name: "Boom Crane", desc: "For large tree removals in tight spaces near structures" },
               { icon: "🪚", name: "Industrial Chipper", desc: "High-capacity chipper for fast, clean debris removal" },

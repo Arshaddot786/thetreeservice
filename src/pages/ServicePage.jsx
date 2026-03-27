@@ -156,7 +156,7 @@ export default function ServicePage() {
 
       {/* Intro + Features */}
       <section style={{ padding: "80px 24px", position: "relative", zIndex: 1 }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 64, alignItems: "center" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 40, alignItems: "start" }}>
           <div>
             <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.8rem,3vw,2.4rem)", color: "#fff", marginBottom: 20, lineHeight: 1.2 }}>Why Homeowners Trust Us for {service.title}</h2>
             <p style={{ color: "#9ca3af", lineHeight: 1.8, fontSize: 16, marginBottom: 32 }}>{service.intro}</p>

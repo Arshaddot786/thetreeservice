@@ -95,8 +95,8 @@ export default function Layout({ children }) {
         .fade-up { animation: fadeUp 0.7s ease both; }
         .desktop-nav { display: flex; }
         .dropdown { position: relative; }
-        .dropdown-menu { display: none; position: absolute; top: calc(100% + 12px); left: 50%; transform: translateX(-50%); background: rgba(5,13,7,0.98); border: 1px solid rgba(74,222,128,0.2); padding: 12px; min-width: 220px; backdrop-filter: blur(20px); box-shadow: 0 20px 60px rgba(0,0,0,0.5); z-index: 999; border-radius: 16px; }
-        .dropdown:hover .dropdown-menu { display: block; }
+        .dropdown-menu { display: none; padding-top: 4px; position: absolute; top: calc(100% + 12px); left: 50%; transform: translateX(-50%); background: rgba(5,13,7,0.98); border: 1px solid rgba(74,222,128,0.2); padding: 12px; min-width: 220px; backdrop-filter: blur(20px); box-shadow: 0 20px 60px rgba(0,0,0,0.5); z-index: 999; border-radius: 16px; }
+        .dropdown:hover .dropdown-menu { display: block; } .dropdown-menu::before { content: ''; position: absolute; top: -14px; left: 0; right: 0; height: 14px; }
         .dropdown-item { display: block; padding: 10px 16px; color: #9ca3af; text-decoration: none; font-size: 14px; font-weight: 500; border-radius: 10px; transition: all 0.2s; white-space: nowrap; }
         .dropdown-item:hover { color: #4ade80; background: rgba(74,222,128,0.08); }
         .dropdown-arrow { font-size: 10px; margin-left: 4px; transition: transform 0.2s; display: inline-block; }
@@ -157,7 +157,17 @@ export default function Layout({ children }) {
         {/* Mobile Menu */}
         {menuOpen && (
           <div style={{ background: "rgba(5,13,7,0.98)", backdropFilter: "blur(20px)", borderTop: "1px solid rgba(74,222,128,0.15)", padding: "20px 24px", display: "flex", flexDirection: "column", gap: 4 }}>
-            {navLinks.map(([label, path]) => (
+            <Link to="/" onClick={() => setMenuOpen(false)} style={{ color: "#e5e7eb", textDecoration: "none", fontSize: 17, fontWeight: 600, padding: "12px 0", borderBottom: "1px solid rgba(255,255,255,0.05)", display: "block" }}>Home</Link>
+            <div style={{ borderBottom: "1px solid rgba(255,255,255,0.05)", paddingBottom: 8 }}>
+              <div style={{ color: "#4ade80", fontSize: 12, fontWeight: 700, letterSpacing: 2, textTransform: "uppercase", padding: "12px 0 8px" }}>Services</div>
+              {[["Tree Removal","/services/tree-removal"],["Tree Trimming","/services/tree-trimming"],["Stump Grinding","/services/stump-grinding"],["Storm Cleanup","/services/storm-cleanup"],["Land Clearing","/services/land-clearing"]].map(([label,path]) => (
+                <Link key={path} to={path} onClick={() => setMenuOpen(false)} style={{ color: "#d1fae5", textDecoration: "none", fontSize: 15, fontWeight: 500, padding: "9px 0 9px 12px", display: "block" }}>• {label}</Link>
+              ))}
+            </div>
+            <Link to="/about" onClick={() => setMenuOpen(false)} style={{ color: "#e5e7eb", textDecoration: "none", fontSize: 17, fontWeight: 600, padding: "12px 0", borderBottom: "1px solid rgba(255,255,255,0.05)", display: "block" }}>About</Link>
+            <Link to="/service-areas" onClick={() => setMenuOpen(false)} style={{ color: "#e5e7eb", textDecoration: "none", fontSize: 17, fontWeight: 600, padding: "12px 0", borderBottom: "1px solid rgba(255,255,255,0.05)", display: "block" }}>Service Areas</Link>
+            <Link to="/blog" onClick={() => setMenuOpen(false)} style={{ color: "#e5e7eb", textDecoration: "none", fontSize: 17, fontWeight: 600, padding: "12px 0", borderBottom: "1px solid rgba(255,255,255,0.05)", display: "block" }}>Blog</Link>
+            <div style={{ display: "none" }}>{navLinks.map(([label, path]) => (
               <Link key={path} to={path} style={{ color: "#e5e7eb", textDecoration: "none", fontSize: 17, fontWeight: 600, padding: "12px 0", borderBottom: "1px solid rgba(255,255,255,0.05)", display: "block" }}>{label}</Link>
             ))}
             <div style={{ display: "flex", flexDirection: "column", gap: 10, marginTop: 16 }}>
@@ -204,7 +214,7 @@ export default function Layout({ children }) {
             </div>
             <div>
               <h4 style={{ color: "#fff", fontWeight: 700, marginBottom: 20, fontSize: 15 }}>Quick Links</h4>
-              {[["About Us","/about"],["Service Areas","/service-areas"],["Blog","/blog"],["Contact","/#contact"]].map(([label,path]) => (
+              {[["About Us","/about"],["Service Areas","/service-areas"],["Blog","/blog"],["Contact","/about"]].map(([label,path]) => (
                 <Link key={path} to={path} style={{ display: "block", color: "#4b5563", fontSize: 14, marginBottom: 10, textDecoration: "none" }}>{label}</Link>
               ))}
               <div style={{ marginTop: 24 }}>
